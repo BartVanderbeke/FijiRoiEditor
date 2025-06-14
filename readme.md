@@ -23,10 +23,11 @@ A standalone CPython-based twin of the Fiji RoiEditor, RoiEditor 2.0, is availab
 ### Installation on Windows
 - Fiji must be installed before Fiji ROI Editor 1.0 can be installed
 - After making a local copy of the repo, run install_Fiji_RoiEditor.bat This will install the Fiji ROI Editor both as a plugin and a standalone app
-- If all goes well an icon appears on the desktop for the standalone execution.
-### Fiji plugin
-- when installed in Fiji, 'Edit ROIs' will appear deep down on the list of plugins.
-- clicking 'Edit ROIs' will start the editor inside the Fiji context.
+#### standalone execution
+- If the installation goes well, an icon appears on the desktop for the standalone execution.
+#### Fiji plugin
+- when installed 'Edit ROIs' will appear deep down on the list of plugins in the plugin dropdown.
+- clicking 'Edit ROIs' will start the editor in the Fiji context.
 ## 🧮 Workflow
 The plot below shows the integrated workflow using [cellpose](https://www.cellpose.org/) and RoiEditor.<br>
 <img src=".\fiji.app\assets\FijiRoiEditorWorkflow.svg" alt="cellpose and Fiji RoiEditor integrated workflow" width="400"/><br>
