@@ -20,6 +20,7 @@ from ij import IJ
 from ij.gui import Roi
 from RoiIo import RoiIo
 
+import sys
 import os
 import time
 
@@ -176,6 +177,7 @@ class DoTheWorkFrame:
             if hasattr(w, "getTitle") and w.getTitle() not in {"Log", "Console", "(Fiji Is Just) ImageJ"}:
                 w.dispose()
         print("Doei doei, lieve Kaat")
+        sys.exit(0)
 
     def on_toggle_show_names(self, event):
         self.gvars["show_names"] = self.cb_show_names.isSelected()

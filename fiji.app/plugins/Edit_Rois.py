@@ -31,11 +31,38 @@ The editing capability has been extended
 - the other files must be stored in jars/lib
 
 """
-__license__ = "MIT"
-__email__ = "bart.vanderbeke@gmail.com"
-__author__ = "Bart Vanderbeke"
-__date__ = "2025-03-30"
-__version__ = "1.0"
 
+import sys
+import os
+
+def add_libs_if_needed():
+    # Check whether we are running inside Fiji
+    is_fiji = 'ij' in sys.modules
+
+    if is_fiji:
+        print "Running as plugin inside Fiji"
+        return
+    else:
+        print "Attempting to start standalone"
+    
+    try:
+        base_dir = os.path.dirname(os.path.abspath(__file__))
+    except NameError:
+        # Fallback if __file__ is not defined (some embedded cases)
+        base_dir = os.getcwd()
+    print "Edit_Rois.py was started from: "+base_dir
+
+    # Path to jars/lib (custom Python libraries)
+    libs_path = os.path.abspath(os.path.join(base_dir, "..", "jars", "lib"))
+    if libs_path not in sys.path:
+        sys.path.insert(0, libs_path)
+    print "Edit_Rois.py expects jars/lib to be at: "+libs_path        
+
+
+
+add_libs_if_needed()
+
+# Start your main application
 from EditRoisGo import just_go_for_it
 just_go_for_it()
+

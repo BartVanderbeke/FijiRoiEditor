@@ -10,17 +10,20 @@ class ROIClickListener(MouseAdapter):
       Alt + double click (left) on ROI, no other special keys pressed --> delete clicked ROI
 
     """
-    def __init__(self, roi_image, label_imp,gvars):
+    def __init__(self, roi_image, label_imp, gvars):
         self.valid = True
-        self.imp = roi_image.getImage()
-        self.canvas = self.imp.getCanvas()
-        self.roi_image =roi_image
+
+        self.roi_image = roi_image
+        self.frame = roi_image.frame
+        self.panel = roi_image.panel
+
         self.label_imp = label_imp
         self.label_pixels = label_imp.getProcessor().getPixels()
         self.width = label_imp.getWidth()
+
         self.rm = RoiManager.getInstance2()
-        self.gvars=gvars
-        self.name_digits = self.rm.name_length-1
+        self.gvars = gvars
+        self.name_digits = self.rm.name_length - 1
         
         if self.rm is None:
             IJ.log("Mouse: ROI Manager must be open!")
@@ -34,8 +37,11 @@ class ROIClickListener(MouseAdapter):
         alt = event.isAltDown()
         toggle_selection = not (alt)
         delete_clicked = alt
-        x = self.imp.getCanvas().offScreenX(event.getX())
-        y = self.imp.getCanvas().offScreenY(event.getY())
+        x_panel = event.getX()
+        y_panel = event.getY()
+        x, y = self.roi_image.panel.panelToImageCoordinates(x_panel, y_panel)
+        # x = event.getX()
+        # y = event.getY()
         if not (0 <= x < self.width and 0 <= y < self.label_imp.getHeight()):
             IJ.log("Mouse clicked outside of image")
             return
@@ -68,32 +74,15 @@ class ROIClickListener(MouseAdapter):
 
     def activate(self):
         if self.valid:
-            self.imp.getCanvas().addMouseListener(self)
+            self.panel.addMouseListener(self)
         else:
             IJ.log("Cannot activate mouse listener")
 
     def deactivate(self):
-        self.imp.getCanvas().removeMouseListener(self)
+        self.panel.removeMouseListener(self)
 
     def dispose(self):
         self.deactivate()
         self.label_pixels = None
         self.rm = None
         self.valid = False
-
-""""
----- Usage ----
-
-background_imp = IJ.getImage()  # Active image you click on
-label_imp_title = "labels.tif"  # Ensure this exactly matches your label image title!
-label_imp = IJ.getImage(label_imp_title)
-
-if label_imp is None:
-    IJ.log("Label image '{}' not found.".format(label_imp_title))
-else:
-    listener = ROIClickListener(background_imp, label_imp,gvars)
-    listener.activate()
-
-To stop later and release resources:
-listener.dispose()
-"""

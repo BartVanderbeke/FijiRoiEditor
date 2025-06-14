@@ -242,7 +242,7 @@ class EditRoisStartUpFrame(JFrame):
         self.gvars["working_image"] = roi_image
         roi_image.show(overlay=True,show_labels=self.gvars["show_names"],show_deleted=self.gvars["show_deleted"])
         
-        imp_frame = roi_image.getImage().getWindow()
+        imp_frame = roi_image.frame
         imp_frame.setResizable(True)
         imp_frame_size = imp_frame.getSize()
         screenSize = Toolkit.getDefaultToolkit().getScreenSize()

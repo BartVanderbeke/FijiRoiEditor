@@ -96,7 +96,7 @@ class TinyRoiManager(object):
         self.name_length=max_digits+1
         text_roi_dummy = TextRoi(0, 0, "L" + str(9).zfill(max_digits))
         b = text_roi_dummy.getBounds()
-        self.label_shift_y = -b.height // 2
+        self.label_shift_y = b.height // 4
 
     @staticmethod
     def getInstance2():

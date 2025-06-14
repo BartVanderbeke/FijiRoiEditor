@@ -54,26 +54,33 @@ def just_go_for_it():
 
     screen_size = Toolkit.getDefaultToolkit().getScreenSize()
 
-    # Configure ImageJ's monospaced text rendering
-    IJ.runMacro('setOption("MonospacedText", true);')
+
 
     # Position JVM console window
     for w in Window.getWindows():
-        if hasattr(w, "getTitle") and w.getTitle() == "Console":
+        if hasattr(w, "getTitle") and (w.getTitle() == "Console" or w.getTitle() == "Edit"):
             w.setLocation(0, screen_size.height - w.getSize().height - 100)
             w.setVisible(True)
             break
 
     print "Hallo Kaat!"
 
-    # Position IJ log window
-    IJ.log("Edit ROIs - plugin started")
-    log_win = WindowManager.getWindow("Log")
-    log_win.setVisible(False)
-    log_win.setSize(screen_size.width // 5, log_win.getSize().height)
-    log_win.setLocation(screen_size.width - log_win.getSize().width,
-                        screen_size.height - log_win.getSize().height - 100)
-    log_win.setVisible(True)
+    ij_instance = IJ.getInstance()
+
+    if ij_instance is not None:
+        # Configure ImageJ's monospaced text rendering
+        IJ.runMacro('setOption("MonospacedText", true);')
+        IJ.log("Edit ROIs - plugin started inside Fiji")
+        log_win = WindowManager.getWindow("Log")
+        log_win.setVisible(False)
+        log_win.setSize(screen_size.width // 5, log_win.getSize().height)
+        log_win.setLocation(screen_size.width - log_win.getSize().width,
+                             screen_size.height - log_win.getSize().height - 100)
+        log_win.setVisible(True)        
+    else:
+        print("Running standalone without starting Fiji")
+
+
 
     # Default session settings
     gvars['eroded_pixels'] = 0
