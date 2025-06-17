@@ -8,7 +8,7 @@ batch-processing large amounts of ROIs in headless or semi-automated workflows.
 It uses parallel arrays for ROI data, allowing quick state toggling, filtering, and metadata storage.
 Supports singleton pattern for global access within a session.
 
-Author: Bart V.
+Author: Bart V. + Elisa
 Date: 2025-03-30
 Version: 1.0
 """

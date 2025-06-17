@@ -1,36 +1,36 @@
 """
-roi_image_swing.py
-
-Swing-based version of RoiImage with dynamic scaling and zoom support.
-Uses Java Swing windowing to visualize ImageProcessor content with ROI overlays.
-Compatible with TinyRoiManager delivering Roi and TextRoi objects.
+Swing-based version of RoiImage with dynamic scaling, zoom support,
+and rectangle selection (rubberbanding) with callback.
 
 Author: Bart V. + Elisa
-Date: 2025-06-13
-Version: 2.2 (scaling + zoom support)
+Date: 2025-06-17
+Version: 2.3 (rubberband select support)
 """
 
 from javax.swing import JFrame, JPanel, WindowConstants, KeyStroke, AbstractAction
-from java.awt import Color, Graphics, Graphics2D, RenderingHints, BasicStroke, event
+from java.awt import Color,  RenderingHints, BasicStroke
 from java.awt.geom.Path2D import Float as java_float
 from java.awt.geom import AffineTransform
-from java.awt.event import WindowAdapter
-from java.awt import Dimension
-from java.awt.image import BufferedImage
-from ij.process import ColorProcessor
-from ij import IJ
+from java.awt.event import WindowAdapter, MouseAdapter, MouseMotionAdapter, MouseEvent
+from java.awt import Dimension, Rectangle
 
-# Import TinyRoiManager and all existing Roi/TextRoi objects
 from TinyRoiManager import TinyRoiManager
-from ij.gui import TextRoi
 
 class RoiImagePanel(JPanel):
     def __init__(self, roi_image):
         JPanel.__init__(self)
         self.roi_image = roi_image
         self.zoom_factor = 1.0
-
         self.register_zoom_keys()
+
+        # rubberband state
+        self.dragging = False
+        self.drag_start = None
+        self.drag_current = None
+
+        # mouse listeners
+        self.addMouseListener(self.MouseHandler(self))
+        self.addMouseMotionListener(self.MouseMotionHandler(self))
 
     def register_zoom_keys(self):
         imap = self.getInputMap(JPanel.WHEN_IN_FOCUSED_WINDOW)
@@ -93,6 +93,17 @@ class RoiImagePanel(JPanel):
         self.roi_image.drawOverlay(g2)
         g2.dispose()
 
+        # Rubberband overlay
+        if self.dragging and self.drag_start and self.drag_current:
+            g.setColor(Color.ORANGE)
+            sx, sy = self.drag_start
+            cx, cy = self.drag_current
+            rx = min(sx, cx)
+            ry = min(sy, cy)
+            rw = abs(sx - cx)
+            rh = abs(sy - cy)
+            g.drawRect(rx, ry, rw, rh)
+
     def panelToImageCoordinates(self, px, py):
         buffered = self.roi_image.getBufferedImage()
         panel_width = self.getWidth()
@@ -111,20 +122,48 @@ class RoiImagePanel(JPanel):
         x_offset = (panel_width - new_w) // 2
         y_offset = (panel_height - new_h) // 2
 
-        # Terugtransformeren
         ix = (px - x_offset) / total_scale
         iy = (py - y_offset) / total_scale
 
-        return int(ix), int(iy)    
+        return int(ix), int(iy)
 
+    class MouseHandler(MouseAdapter):
+        def __init__(self, panel):
+            self.panel = panel
+
+        def mousePressed(self, e):
+            if e.getButton() == MouseEvent.BUTTON3:
+                self.panel.dragging = True
+                self.panel.drag_start = (e.getX(), e.getY())
+                self.panel.drag_current = (e.getX(), e.getY())
+
+        def mouseReleased(self, e):
+            if self.panel.dragging:
+                self.panel.dragging = False
+                sx, sy = self.panel.drag_start
+                ex, ey = e.getX(), e.getY()
+                rx = min(sx, ex)
+                ry = min(sy, ey)
+                rw = abs(sx - ex)
+                rh = abs(sy - ey)
+                if rw > 1 and rh > 1 and self.panel.roi_image.on_rectangle_select:
+                    ix1, iy1 = self.panel.panelToImageCoordinates(rx, ry)
+                    ix2, iy2 = self.panel.panelToImageCoordinates(rx+rw, ry+rh)
+                    rect = Rectangle(min(ix1, ix2), min(iy1, iy2), abs(ix2-ix1), abs(iy2-iy1))
+                    self.panel.roi_image.on_rectangle_select(rect)
+                self.panel.repaint()
+
+    class MouseMotionHandler(MouseMotionAdapter):
+        def __init__(self, panel):
+            self.panel = panel
+
+        def mouseDragged(self, e):
+            if self.panel.dragging:
+                self.panel.drag_current = (e.getX(), e.getY())
+                self.panel.repaint()
 
 class RoiImage:
-    """
-    Swing-based ROI image manager fully independent of Fiji windowing.
-    Now with automatic scaling and zoom support.
-    """
-
-    def __init__(self, image_or_processor, trm=None, on_window_closing=None):
+    def __init__(self, image_or_processor, trm=None, on_window_closing=None,on_rectangle_select=None):
         if hasattr(image_or_processor, 'getProcessor'):
             self.imageplus = image_or_processor
             self.processor = image_or_processor.getProcessor()
@@ -148,6 +187,7 @@ class RoiImage:
         self.use_state_map = True
         self.on_window_closing = on_window_closing
         self.visible = True
+        self.on_rectangle_select = on_rectangle_select
 
         self.frame = JFrame("RoiImage Viewer")
         self.panel = RoiImagePanel(self)
@@ -236,4 +276,3 @@ class RoiImage:
 
     def getImage(self):
         return self.imageplus
-    

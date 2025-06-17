@@ -5,7 +5,7 @@ Entry point for the 'Edit ROIs' Fiji plugin.
 Initializes global variables, prepares UI layout and logging, sets preferences,
 instantiates main classes, and sets up key interception.
 
-Author: Bart V.
+Author: Bart V. + Elisa
 Date: 2025-03-30
 """
 

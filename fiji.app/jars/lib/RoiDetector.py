@@ -5,7 +5,7 @@ Background worker that scans a labeled image for unprocessed regions and generat
 unprocessed = not assigned to an ROI yet
 Intended to be run in parallel by multiple threads to speed up ROI detection.
 
-Author: Bart V.
+Author: Bart V. + Elisa
 Date: 2025-03-30
 Version: 1.0
 """

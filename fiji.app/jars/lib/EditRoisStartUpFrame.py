@@ -238,7 +238,7 @@ class EditRoisStartUpFrame(JFrame):
         self.gvars['force_pixel'] = self.cbPixel.isSelected()
         print "Remove at edges: " + str(self.gvars['remove_edges']) + " | Force pixel as unit: " + str(self.gvars['force_pixel']) + " | Remove small: " + str(self.gvars['remove_small']) + " | size threshold: " + str(self.gvars['size_threshold'])
         
-        roi_image= RoiImage(imp_background,RoiManager.getInstance2(),on_window_closing=on_image_window_closing)
+        roi_image= RoiImage(imp_background,RoiManager.getInstance2(),on_window_closing=on_image_window_closing,on_rectangle_select=self.gvars['DoTheWorkFrame'].on_rectangle_select)
         self.gvars["working_image"] = roi_image
         roi_image.show(overlay=True,show_labels=self.gvars["show_names"],show_deleted=self.gvars["show_deleted"])
         

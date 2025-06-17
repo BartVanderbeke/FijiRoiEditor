@@ -5,7 +5,7 @@ Graphical user interface (GUI) frame for eroding, saving, and selecting ROIs
 in the 'Edit ROIs' Fiji plugin. This class manages button callbacks,
 checkbox states, and coordinates overlay updates based on user input.
 
-Author: Bart V.
+Author: Bart V. + Elisa
 Date: 2025-03-30
 Version: 1.0
 """
@@ -210,17 +210,24 @@ class DoTheWorkFrame:
         
     def on_f1_key_pressed(self,argument):
         IJ.log("F1 key pressed")
-        roi_image = self.gvars.get("working_image").getImage()
-        roi = roi_image.getRoi()
-        if roi is None:
-            IJ.log("F1 pressed but no rectangle indicated on screen")
-            return
-        if not isinstance(roi, Roi) or roi.getType()!=Roi.RECTANGLE:
-            return
-        rect = roi.getBounds()
+
+        # roi_image = self.gvars.get("working_image").getImage()
+        # roi = roi_image.getRoi()
+        # if roi is None:
+        #     IJ.log("F1 pressed but no rectangle indicated on screen")
+        #     return
+        # if not isinstance(roi, Roi) or roi.getType()!=Roi.RECTANGLE:
+        #     return
+        # rect = roi.getBounds()
+        # self.rm.select_within(rect,additive=True)
+        # self.refresh_overlay()
+        # roi_image.deleteRoi()
+
+    def  on_rectangle_select(self, rect):
+        IJ.log("rectangle select")
         self.rm.select_within(rect,additive=True)
         self.refresh_overlay()
-        roi_image.deleteRoi()
+
 
     def on_tagged_delete(self,tag):
         IJ.log("Function key pressed for tagged delete: "+tag)
