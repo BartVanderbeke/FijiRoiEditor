@@ -1,5 +1,14 @@
-# A Jython class to intercept key presses in the kingdom of ImageJ,
-# allowing you to define your own noble key-to-action mappings.
+"""
+A Jython class to intercept key presses in the kingdom of ImageJ,
+allowing you to define your own noble key-to-action mappings.
+
+
+Author: Bart Vanderbeke & Elisa
+Copyright: © 2025
+License: MIT
+
+Parts of the code in this project have been derived from chatGPT suggestions.
+"""
 
 from java.awt import KeyboardFocusManager
 from java.awt.event import KeyEvent

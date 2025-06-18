@@ -1,3 +1,12 @@
+"""
+
+Author: Bart Vanderbeke & Elisa
+Copyright: © 2025
+License: MIT
+
+Parts of the code in this project have been derived from chatGPT suggestions.
+"""
+
 import math
 import os
 import threading
@@ -12,8 +21,6 @@ from RoiHistogram import RoiHistogram
 from HistogramPlotFrame import HistogramPlotFrame
 from TinyRoiManager import TinyRoiManager as RoiManager
 
-# DATA IS ONGELDIG NADAT UNIT IS VERANDERD
-# UNIT CHECKEN EN HERREKENEN
 
 import time
 import os

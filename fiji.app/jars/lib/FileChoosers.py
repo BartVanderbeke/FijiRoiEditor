@@ -1,4 +1,14 @@
-# -*- coding: utf-8 -*-
+"""
+
+File dialogs
+
+Author: Bart Vanderbeke & Elisa
+Copyright: © 2025
+License: MIT
+
+Parts of the code in this project have been derived from chatGPT suggestions.
+
+"""
 from java.lang import System
 from java.io import File
 from java.util.prefs import Preferences

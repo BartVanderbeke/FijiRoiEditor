@@ -1,3 +1,11 @@
+"""
+
+Author: Bart Vanderbeke & Elisa
+Copyright: © 2025
+License: MIT
+
+Parts of the code in this project have been derived from chatGPT suggestions.
+"""
 from ij import IJ
 #from ij.plugin.frame import RoiManager
 from ij.gui import Roi as ROI

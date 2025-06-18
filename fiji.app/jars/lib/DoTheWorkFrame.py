@@ -5,9 +5,12 @@ Graphical user interface (GUI) frame for eroding, saving, and selecting ROIs
 in the 'Edit ROIs' Fiji plugin. This class manages button callbacks,
 checkbox states, and coordinates overlay updates based on user input.
 
-Author: Bart V. + Elisa
-Date: 2025-03-30
-Version: 1.0
+Author: Bart Vanderbeke & Elisa
+Copyright: © 2025
+License: MIT
+
+Parts of the code in this project have been derived from chatGPT suggestions.
+
 """
 
 from javax.swing import JFrame, JLabel, JButton, JTextField, JCheckBox, BoxLayout, JOptionPane, JPanel

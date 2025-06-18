@@ -1,3 +1,14 @@
+"""
+
+start up window for the 'Edit ROIs' Fiji plugin.
+
+Author: Bart Vanderbeke & Elisa
+Copyright: © 2025
+License: MIT
+
+Parts of the code in this project have been derived from chatGPT suggestions.
+
+"""
 from javax.swing import JFrame, JPanel, JLabel, JButton, JTextField, JCheckBox, BoxLayout, JOptionPane
 from java.awt import Toolkit, Color
 from java.awt.event import WindowAdapter

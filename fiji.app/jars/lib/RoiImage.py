@@ -2,9 +2,12 @@
 Swing-based version of RoiImage with dynamic scaling, zoom support,
 and rectangle selection (rubberbanding) with callback.
 
-Author: Bart V. + Elisa
-Date: 2025-06-17
-Version: 2.3 (rubberband select support)
+Author: Bart Vanderbeke & Elisa
+Copyright: © 2025
+License: MIT
+
+Parts of the code in this project have been derived from chatGPT suggestions.
+
 """
 
 from javax.swing import JFrame, JPanel, WindowConstants, KeyStroke, AbstractAction

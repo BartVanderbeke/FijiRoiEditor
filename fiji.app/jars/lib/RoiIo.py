@@ -7,9 +7,11 @@ Integrates with TinyRoiManager. Supports multiple loading strategies depending o
 - With Lxxxx.roi naming
 - With no naming: infers labels from pixel-value at centroid position of an ROI in label image.
 
-Author: Bart V. + Elisa
-Date: 2025-03-30
-Version: 1.0
+Author: Bart Vanderbeke & Elisa
+Copyright: © 2025
+License: MIT
+
+Parts of the code in this project have been derived from chatGPT suggestions.
 """
 
 import zipfile
