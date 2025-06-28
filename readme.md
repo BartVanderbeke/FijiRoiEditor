@@ -18,13 +18,14 @@ A standalone CPython-based twin of the Fiji RoiEditor, RoiEditor 2.0, is availab
 - Area & Feret measurements are computed for all ROIs, not using Fiji's measurement table.
 - The stats for each measurement are shown in a histogram window.
 - The user can select the edge of the ROI-cloud or the outliers for each measurement for deletion.
-- An outlier for a measurement is a value deviating more than 1.5 * IQR from the median.
+- An outlier for a measurement is a value outside of [q1 - 1.5 * IQR,q3 + 1.5 * IQR].
 - The measurements are written to a .csv file.
 ### Installation on Windows
-- Fiji must be installed before Fiji ROI Editor 1.0 can be installed
-- After making a local copy of the repo, run install_Fiji_RoiEditor.bat This will install the Fiji ROI Editor both as a plugin and a standalone app
+- Fiji must be installed before Fiji ROI Editor 1.0 can be installed.
+- After making a local copy of the repo, run install_Fiji_RoiEditor.bat This will install the Fiji ROI Editor both as a plugin and a standalone app. After installation, you can remove the folder from which you started the install.
 #### standalone execution
 - If the installation goes well, an icon appears on the desktop for the standalone execution.
+- The RoiEditor can also be started by clicking start_RoiEditor.bat
 #### Fiji plugin
 - when installed 'Edit ROIs' will appear deep down on the list of plugins in the plugin dropdown.
 - clicking 'Edit ROIs' will start the editor in the Fiji context.

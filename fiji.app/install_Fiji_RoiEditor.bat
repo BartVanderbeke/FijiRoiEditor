@@ -51,7 +51,7 @@ xcopy ".\assets\*.ico" "!FIJI_DIR!\assets" /E /Y /I
 
 echo [6/7] Copy content of current folder to FIJI_DIR
 :: copy current folder content to FIJI_DIR (non-recursive)
-xcopy ".\start_Roi_Editor.bat" "!FIJI_DIR!\" /Y
+xcopy ".\start_RoiEditor.bat" "!FIJI_DIR!\" /Y
 
 echo [7/7]  Create desktop shortcut
 powershell -NoProfile -Command ^
